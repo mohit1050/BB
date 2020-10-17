@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/ivSettingsListView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvLvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:textSize="15sp"
+        android:text="Setting Name"
+        app:layout_constraintStart_toEndOf="@+id/ivSettingsListView"
+        app:layout_constraintTop_toTopOf="@+id/ivSettingsListView" />
+
+    <TextView
+        android:id="@+id/tvLvDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Setting Description"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivSettingsListView"
+        app:layout_constraintStart_toStartOf="@+id/tvLvName" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
