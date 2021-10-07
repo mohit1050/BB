@@ -2,12 +2,14 @@ package com.mm.bb
 
 import android.Manifest
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
@@ -23,6 +25,7 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import kotlinx.android.synthetic.main.activity_create_view_p_d_f.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import me.kariot.pdfinvoice.ModelItems
@@ -62,6 +65,8 @@ class CreateViewPDFActivity : AppCompatActivity() {
         BaseFont.createFont("assets/fonts/app_font_bold.ttf", "UTF-8", BaseFont.EMBEDDED)
     var appFontBold = Font(basfontBold, FONT_SIZE_DEFAULT)
 
+    private lateinit var invoicePath:String
+
     val PADDING_EDGE = 40f
     val TEXT_TOP_PADDING = 3f
     val TABLE_TOP_PADDING = 10f
@@ -69,9 +74,52 @@ class CreateViewPDFActivity : AppCompatActivity() {
     val BILL_DETAILS_TOP_PADDING = 50f
     val data = ArrayList<ModelItems>()
 
+    private lateinit var cName: String
+    private lateinit var cBusinessName: String
+    private lateinit var cContact: String
+    private lateinit var cBuildingStreet: String
+    private lateinit var cLandmark: String
+    private lateinit var cCityPin: String
+    private lateinit var cWebsite: String
+
+    private lateinit var uName: String
+    private lateinit var uBusinessName: String
+    private lateinit var uContact: String
+    private lateinit var uBuildingStreet: String
+    private lateinit var uLandmark: String
+    private lateinit var uCityPin: String
+    private lateinit var uWebsite: String
+    private lateinit var uEmail: String
+    private lateinit var uInvoiceNo: String
+    private lateinit var invoiceName: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_view_p_d_f)
+
+        //get scanned customer details which are retrieved from firebase after scanning
+        val sharedPref = getSharedPreferences("userData", Context.MODE_PRIVATE)
+        cName = sharedPref.getString("sName", "").toString()
+        cBusinessName = sharedPref.getString("sBusinessName", "").toString()
+        cContact = sharedPref.getString("sContact", "").toString()
+        cBuildingStreet = sharedPref.getString("sBuildingStreet", "").toString()
+        cLandmark = sharedPref.getString("sLandmark", "").toString()
+        cCityPin = sharedPref.getString("sCityPin", "").toString()
+        cWebsite = sharedPref.getString("sWebsite", "").toString()
+
+        uName = sharedPref.getString("uName", "").toString()
+        uBusinessName = sharedPref.getString("uBusinessName", "").toString()
+        uContact = sharedPref.getString("uContact", "").toString()
+        uBuildingStreet = sharedPref.getString("uBuildingStreet", "").toString()
+        uLandmark = sharedPref.getString("uLandmark", "").toString()
+        uCityPin = sharedPref.getString("uCityPin", "").toString()
+        uWebsite = sharedPref.getString("uWebsite", "").toString()
+        uEmail = sharedPref.getString("uEmail", "").toString()
+        uInvoiceNo = sharedPref.getString("uInvoiceNo", "1").toString()
+
+        Log.d("INVOICE", "cName: $cName")
+        Log.d("INVOICE", "uName: $uName")
+
 
         initData()
 
@@ -88,11 +136,16 @@ class CreateViewPDFActivity : AppCompatActivity() {
 
                             appFontRegular.color = BaseColor.WHITE
                             appFontRegular.size = 10f
+                            invoiceName = "$uInvoiceNo $cName"
                             val doc = Document(PageSize.A4, 0f, 0f, 0f, 0f)
-                            val outPath =
-                                getExternalFilesDir(null).toString() + "/my_invoice.pdf" //location where the pdf will store
-                            Log.d("loc", outPath)
-                            val writer = PdfWriter.getInstance(doc, FileOutputStream(outPath))
+                            invoicePath =
+                                getExternalFilesDir(null).toString() + "/$invoiceName.pdf" //location where the pdf will store
+
+
+//                            invoicePath = Environment.getExternalStorageDirectory().path + File.separator + "BillingBytes/$invoiceName.pdf"
+
+                            Log.d("loc", invoicePath)
+                            val writer = PdfWriter.getInstance(doc, FileOutputStream(invoicePath))
                             doc.open()
 
 
@@ -110,21 +163,44 @@ class CreateViewPDFActivity : AppCompatActivity() {
                             initFooter(doc)
                             doc.close()
 
+                            val invoiceno = uInvoiceNo.toInt() + 1
+                            sharedPref.edit().putString("uInvoiceNo", invoiceno.toString()).apply()
+
+
                             // copying this code imports the following file
                             // import com.karumi.dexter.BuildConfig
                             // remove it manually as this needs authority:BuildConfig.APPLICATION_ID ...
 
-                            val file = File(outPath)
+                            val file = File(invoicePath)
                             val path: Uri = FileProvider.getUriForFile(
                                 applicationContext,
                                 BuildConfig.APPLICATION_ID + ".provider", file
                             )
 
                             try {
-                                val intent = Intent(Intent.ACTION_VIEW)
-                                intent.setDataAndType(path, "application/pdf")
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                                startActivity(intent)
+//                                val intent = Intent(Intent.ACTION_VIEW)
+//                                intent.setDataAndType(path, "application/pdf")
+//                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+//                                startActivity(intent)
+
+
+                                pdfView.fromUri(path)
+                                    .pages(0, 2, 1, 3, 3, 3) // all pages are displayed by default
+                                    .enableSwipe(true) // allows to block changing pages using swipe
+                                    .swipeHorizontal(false)
+                                    .enableDoubletap(true)
+                                    .defaultPage(0)
+
+                                    // called on single tap, return true if handled, false to toggle scroll handle visibility
+                                    .enableAnnotationRendering(false) // render annotations (such as comments, colors or forms)
+                                    .password(null)
+                                    .scrollHandle(null)
+                                    .enableAntialiasing(true) // improve rendering a little bit on low-res screens
+                                    // spacing between pages in dp. To define spacing color, set view background
+                                    .spacing(0)
+                                    .load();
+
+
                             } catch (e: ActivityNotFoundException) {
                                 toast("There is no PDF Viewer ")
                             }
@@ -207,7 +283,7 @@ class CreateViewPDFActivity : AppCompatActivity() {
         val phoneCell =
             PdfPCell(
                 Paragraph(
-                    "+91 8547984369",
+                    uContact,
                     appFontRegular
                 )
             )
@@ -217,14 +293,14 @@ class CreateViewPDFActivity : AppCompatActivity() {
 
         contactTable.addCell(phoneCell)
 
-        val emailCellCell = PdfPCell(Phrase("sreeharikariot@gmail.com", appFontRegular))
+        val emailCellCell = PdfPCell(Phrase(uEmail, appFontRegular))
         emailCellCell.border = Rectangle.NO_BORDER
         emailCellCell.horizontalAlignment = Element.ALIGN_RIGHT
         emailCellCell.paddingTop = TEXT_TOP_PADDING
 
         contactTable.addCell(emailCellCell)
 
-        val webCell = PdfPCell(Phrase("www.kariot.me", appFontRegular))
+        val webCell = PdfPCell(Phrase(uWebsite, appFontRegular))
         webCell.border = Rectangle.NO_BORDER
         webCell.paddingTop = TEXT_TOP_PADDING
         webCell.horizontalAlignment = Element.ALIGN_RIGHT
@@ -242,7 +318,7 @@ class CreateViewPDFActivity : AppCompatActivity() {
         val address = PdfPTable(1)
         val line1 = PdfPCell(
             Paragraph(
-                "Address Line 1",
+                uBuildingStreet,
                 appFontRegular
             )
         )
@@ -252,14 +328,14 @@ class CreateViewPDFActivity : AppCompatActivity() {
 
         address.addCell(line1)
 
-        val line2 = PdfPCell(Paragraph("Address Line 2", appFontRegular))
+        val line2 = PdfPCell(Paragraph(uLandmark, appFontRegular))
         line2.border = Rectangle.NO_BORDER
         line2.paddingTop = TEXT_TOP_PADDING
         line2.horizontalAlignment = Element.ALIGN_RIGHT
 
         address.addCell(line2)
 
-        val line3 = PdfPCell(Paragraph("Address Line 3", appFontRegular))
+        val line3 = PdfPCell(Paragraph(uCityPin, appFontRegular))
         line3.border = Rectangle.NO_BORDER
         line3.paddingTop = TEXT_TOP_PADDING
         line3.horizontalAlignment = Element.ALIGN_RIGHT
@@ -417,7 +493,7 @@ class CreateViewPDFActivity : AppCompatActivity() {
 
         val clientAddressCell1 = PdfPCell(
             Paragraph(
-                "Customer name",
+                cName,
                 appFontRegular
             )
         )
@@ -427,7 +503,7 @@ class CreateViewPDFActivity : AppCompatActivity() {
 
         val clientAddressCell2 = PdfPCell(
             Paragraph(
-                "Building no./ street",
+                cBuildingStreet,
                 appFontRegularSmall
             )
         )
@@ -438,7 +514,7 @@ class CreateViewPDFActivity : AppCompatActivity() {
 
         val clientAddressCell3 = PdfPCell(
             Paragraph(
-                "landmark",
+                cLandmark,
                 appFontRegularSmall
             )
         )
@@ -449,7 +525,7 @@ class CreateViewPDFActivity : AppCompatActivity() {
 
         val clientAddressCell4 = PdfPCell(
             Paragraph(
-                "city -pin",
+                cCityPin,
                 appFontRegularSmall
             )
         )
@@ -476,7 +552,7 @@ class CreateViewPDFActivity : AppCompatActivity() {
         invoiceNumAndData.addCell(txtInvoiceNumber)
         appFontRegular.color = BaseColor.BLACK
         appFontRegular.size = 12f
-        val invoiceNumber = PdfPCell(Phrase("20 0924 001", appFontRegular))  // yy mmdd num
+        val invoiceNumber = PdfPCell(Phrase(uInvoiceNo, appFontRegular))  // yy mmdd num
         invoiceNumber.border = Rectangle.NO_BORDER
         invoiceNumber.paddingTop = TEXT_TOP_PADDING
         invoiceNumAndData.addCell(invoiceNumber)
@@ -626,5 +702,15 @@ class CreateViewPDFActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         finish()
+    }
+
+    fun shareInvoice(view: android.view.View) {
+
+  val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "application/pdf"
+        intent.putExtra(Intent.EXTRA_STREAM,Uri.parse(invoicePath))
+        val chooser = Intent.createChooser(intent, "Share Invoice using..")
+        startActivity(chooser)
+
     }
 }

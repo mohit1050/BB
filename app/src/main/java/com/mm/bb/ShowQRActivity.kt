@@ -26,7 +26,7 @@ class ShowQRActivity : AppCompatActivity() {
         val uid = currentUser?.uid
         // generate and set image to image view
         val bitmap = uid?.let { generateQRCode(it) }
-        ivShowQR.setImageBitmap(bitmap)
+        ivShowQR1.setImageBitmap(bitmap)
         tvQRtext.text = uid
     }
 

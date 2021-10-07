@@ -77,6 +77,11 @@ dependencies {
 
     implementation 'com.itextpdf:itextg:5.5.10' // iText PDF
 
+    // lottie animation
+    implementation "com.airbnb.android:lottie:4.1.0"
+
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+
 
 
 }

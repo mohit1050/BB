@@ -1,7 +1,10 @@
 package com.mm.bb
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.transition.TransitionManager
@@ -31,7 +34,7 @@ class AccountActivity : AppCompatActivity() {
     }
 
 
-    fun retrieveData() {
+    private fun retrieveData() {
         CoroutineScope(Dispatchers.IO).launch {
             val docRef = Firebase.firestore.collection("Users").document(currentUser.uid)
             docRef.get()
@@ -39,15 +42,38 @@ class AccountActivity : AppCompatActivity() {
                     if (document != null) {
 //                    Log.d("101", "DocumentSnapshot data: ${document.data}")
 
-                        etYourName.setText(document.getString("yourName"))
-                        etBusinessName.setText(document.getString("businessName"))
-                        etContactNo.setText(document.getString("contact"))
-                        etBuildingStreet.setText(document.getString("buildingStreet"))
-                        etLandmark.setText(document.getString("landmark"))
-                        etCityPin.setText(document.getString("cityPin"))
-                        etWebsite.setText(document.getString("website"))
+                        val uName = (document.getString("yourName")).toString()
+                        val uBusinessName = (document.getString("businessName")).toString()
+                        val uContact = (document.getString("contact")).toString()
+                        val uBuildingStreet = (document.getString("buildingStreet")).toString()
+                        val uLandmark = (document.getString("landmark")).toString()
+                        val uCityPin = (document.getString("cityPin")).toString()
+                        val uWebsite = (document.getString("website")).toString()
 
-                        Toast.makeText(this@AccountActivity, "Data Retrieved", Toast.LENGTH_SHORT).show()
+                        etYourName.setText(uName)
+                        etBusinessName.setText(uBusinessName)
+                        etContactNo.setText(uContact)
+                        etBuildingStreet.setText(uBuildingStreet)
+                        etLandmark.setText(uLandmark)
+                        etCityPin.setText(uCityPin)
+                        etWebsite.setText(uWebsite)
+
+                        val sharedPref = getSharedPreferences("userData", Context.MODE_PRIVATE)
+                        val editor = sharedPref.edit()
+                        editor.apply {
+                            //save values to local storage also
+                            putString("uName", uName)
+                            putString("uBusinessName", uBusinessName)
+                            putString("uContact", uContact)
+                            putString("uBuildingStreet", uBuildingStreet)
+                            putString("uLandmark", uLandmark)
+                            putString("uCityPin", uCityPin)
+                            putString("uWebsite", uWebsite)
+                            apply()
+                        }
+
+                        Toast.makeText(this@AccountActivity, "Data Retrieved", Toast.LENGTH_SHORT)
+                            .show()
 //                   tvYourName.setText(document.data)
                     }
                 }
@@ -87,6 +113,7 @@ class AccountActivity : AppCompatActivity() {
             )
             saveData(accountFSDataCalss)
         }
+
     }
 
     private fun saveData(accountFSDataClass: AccountFSDataClass) =
@@ -101,6 +128,8 @@ class AccountActivity : AppCompatActivity() {
                     ).show()
 
                     finish()
+                    val intent = Intent(this@AccountActivity, DashboardActivity::class.java)
+                    startActivity(intent)
 
                 }
             } catch (e: Exception) {
@@ -173,6 +202,13 @@ class AccountActivity : AppCompatActivity() {
         } else tilWebsite.isErrorEnabled = false
 
         return isValid
+    }
+
+    fun signout(view: android.view.View) {
+        mAuth.signOut()
+        finish()
+        val intent = Intent(this, SignInActivity::class.java)
+        startActivity(intent)
     }
 
 }

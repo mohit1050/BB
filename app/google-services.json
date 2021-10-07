@@ -1,42 +1,41 @@
 {
   "project_info": {
-    "project_number": "632228967670",
-    "firebase_url": "https://billingbytes-prototype.firebaseio.com",
-    "project_id": "billingbytes-prototype",
-    "storage_bucket": "billingbytes-prototype.appspot.com"
+    "project_number": "381067299969",
+    "project_id": "billing-bytes",
+    "storage_bucket": "billing-bytes.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:632228967670:android:ccca6ee42d7301e7fc28d7",
+        "mobilesdk_app_id": "1:381067299969:android:4cbce182e19c4ba2f15180",
         "android_client_info": {
           "package_name": "com.mm.bb"
         }
       },
       "oauth_client": [
         {
-          "client_id": "632228967670-l8lvn2bcs63f3lb00lc547rfcgoeev7c.apps.googleusercontent.com",
+          "client_id": "381067299969-jc557c02r74vsnckj2r25nfcblp6s8pe.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.mm.bb",
-            "certificate_hash": "21452763b31c5e013914f56c9f3e4262ea42b626"
+            "certificate_hash": "b9872aa912995bfbf6cd6b22d43988fcb554b8e5"
           }
         },
         {
-          "client_id": "632228967670-qjdhfjpugptbn5rortbhtr957kd1ouo2.apps.googleusercontent.com",
+          "client_id": "381067299969-qui3o88o6ackm92ncmr2rrdpq4eogvij.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAhZrwRZaL_BEONhUxQN8d26bMY3mWIyw8"
+          "current_key": "AIzaSyDkBtKcTHocN-t7WqpJrRlTtyJ0d3-o_1U"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "632228967670-qjdhfjpugptbn5rortbhtr957kd1ouo2.apps.googleusercontent.com",
+              "client_id": "381067299969-qui3o88o6ackm92ncmr2rrdpq4eogvij.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

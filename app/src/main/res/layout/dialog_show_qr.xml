@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="#fff"
+    app:cardElevation="6dp"
+    app:cardPreventCornerOverlap="true"
+    android:tooltipText="Scan QR"
+    app:cardUseCompatPadding="true"
+    app:shapeAppearance="@style/ShapeAppearance.MyApp.MediumComponent.RoundedAll">
+
+
+<LinearLayout
+        android:layout_margin="16dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivShowQR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#DEDEDE" />
+
+<!--        <Button-->
+<!--            android:id="@+id/btnDismissCustomDialog"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="45dp"-->
+<!--            android:textColor="#787878"-->
+<!--            android:background="?selectableItemBackground"-->
+<!--            android:text="Dismiss" />-->
+
+    <TextView
+        android:id="@+id/tvDialogUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="6dp"
+        android:text="User Name"/>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

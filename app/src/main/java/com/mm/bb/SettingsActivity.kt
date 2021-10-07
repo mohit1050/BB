@@ -6,9 +6,10 @@ import android.os.Bundle
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.activity_dashboard.civUserProfileImage
-import kotlinx.android.synthetic.main.activity_dashboard.tvUserEmail
+//import kotlinx.android.synthetic.main.activity_dashboard.tvUserEmail
 import kotlinx.android.synthetic.main.activity_dashboard.tvUserName
 import kotlinx.android.synthetic.main.activity_settings.*
 
@@ -51,7 +52,7 @@ class SettingsActivity : AppCompatActivity() {
             SettingListAdapter(this, lvSettingName, lvSettingDescription, lvImageIcons)
         lvSettings.adapter = settingListAdapter
 
-        lvSettings.setOnItemClickListener() { adapterView, view, position, id ->
+        lvSettings.setOnItemClickListener { adapterView, view, position, id ->
 //            val itemAtPos = adapterView.getItemAtPosition(position)
 //            val itemIdAtPos = adapterView.getItemIdAtPosition(position)
 //            Toast.makeText(this, "$itemAtPos item id $itemIdAtPos", Toast.LENGTH_LONG).show()
@@ -76,4 +77,13 @@ class SettingsActivity : AppCompatActivity() {
             }
         }
     }
+
+    fun signout(view: android.view.View) {
+        mAuth.signOut()
+        finish()
+        val intent = Intent(this, SignInActivity::class.java)
+                   startActivity(intent)
+    }
+
+
 }

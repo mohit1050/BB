@@ -17,7 +17,7 @@
         android:text="Genrate QR" />
 
     <ImageView
-        android:id="@+id/ivShowQR"
+        android:id="@+id/ivShowQR1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

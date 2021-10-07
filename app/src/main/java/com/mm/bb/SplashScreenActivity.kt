@@ -29,7 +29,7 @@ class SplashScreenActivity : AppCompatActivity() {
                 startActivity(signInIntent)
                 finish()
             }
-        }, 100)
+        }, 0)
 
     }
 }
