@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvLvName"
+        android:id="@+id/tvLvCustomerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -25,12 +25,12 @@
         app:layout_constraintTop_toTopOf="@+id/ivSettingsListView" />
 
     <TextView
-        android:id="@+id/tvLvDescription"
+        android:id="@+id/tvLvInvoiceNo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Setting Description"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@+id/ivSettingsListView"
-        app:layout_constraintStart_toStartOf="@+id/tvLvName" />
+        app:layout_constraintStart_toStartOf="@+id/tvLvCustomerName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

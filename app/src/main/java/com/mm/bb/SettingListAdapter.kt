@@ -19,8 +19,8 @@ class SettingListAdapter(
         val inflater = context.layoutInflater
         val rowView = inflater.inflate(R.layout.listview_settings, null, true)
 
-        val settingName1 = rowView.findViewById(R.id.tvLvName) as TextView
-        val settingDescription1 = rowView.findViewById(R.id.tvLvDescription) as TextView
+        val settingName1 = rowView.findViewById(R.id.tvLvCustomerName) as TextView
+        val settingDescription1 = rowView.findViewById(R.id.tvLvInvoiceNo) as TextView
         val settingIcon1 = rowView.findViewById(R.id.ivSettingsListView) as ImageView
 
         settingName1.text = lvSettingName[position]

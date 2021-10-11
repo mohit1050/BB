@@ -3,20 +3,34 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android Kotlin/BB/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2755208333333333" />
         <entry key="..\:/Android Kotlin/BB/app/src/main/res/drawable/background_card_view.xml" value="0.2755208333333333" />
         <entry key="..\:/Android Kotlin/BB/app/src/main/res/drawable/card_background.xml" value="0.2755208333333333" />
         <entry key="..\:/Android Kotlin/BB/app/src/main/res/drawable/card_shapes.xml" value="0.2755208333333333" />
         <entry key="..\:/Android Kotlin/BB/app/src/main/res/drawable/ic_add_to_list.xml" value="0.271875" />
+        <entry key="..\:/Android Kotlin/BB/app/src/main/res/drawable/ic_bg.xml" value="0.2755208333333333" />
+        <entry key="..\:/Android Kotlin/BB/app/src/main/res/drawable/ic_delete_forever.xml" value="0.14947916666666666" />
+        <entry key="..\:/Android Kotlin/BB/app/src/main/res/drawable/ic_fe.xml" value="0.2755208333333333" />
+        <entry key="..\:/Android Kotlin/BB/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2755208333333333" />
+        <entry key="..\:/Android Kotlin/BB/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.15" />
+        <entry key="..\:/Android Kotlin/BB/app/src/main/res/drawable/ic_qr_code.xml" value="0.2755208333333333" />
+        <entry key="..\:/Android Kotlin/BB/app/src/main/res/drawable/ic_share.xml" value="0.2755208333333333" />
+        <entry key="..\:/Android Kotlin/BB/app/src/main/res/drawable/lineargradient_splash_screen.xml" value="0.2755208333333333" />
         <entry key="..\:/Android Kotlin/BB/app/src/main/res/layout/activity_account.xml" value="0.12613981762917933" />
         <entry key="..\:/Android Kotlin/BB/app/src/main/res/layout/activity_create_view_p_d_f.xml" value="0.24818840579710144" />
         <entry key="..\:/Android Kotlin/BB/app/src/main/res/layout/activity_dashboard.xml" value="0.264" />
         <entry key="..\:/Android Kotlin/BB/app/src/main/res/layout/activity_items_a_d_u.xml" value="0.12613981762917933" />
-        <entry key="..\:/Android Kotlin/BB/app/src/main/res/layout/activity_items_list.xml" value="0.2" />
+        <entry key="..\:/Android Kotlin/BB/app/src/main/res/layout/activity_items_list.xml" value="0.38754863813229573" />
         <entry key="..\:/Android Kotlin/BB/app/src/main/res/layout/activity_settings.xml" value="0.2563405797101449" />
         <entry key="..\:/Android Kotlin/BB/app/src/main/res/layout/activity_show_q_r.xml" value="0.2391304347826087" />
-        <entry key="..\:/Android Kotlin/BB/app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
+        <entry key="..\:/Android Kotlin/BB/app/src/main/res/layout/activity_sign_in.xml" value="0.14583333333333334" />
+        <entry key="..\:/Android Kotlin/BB/app/src/main/res/layout/activity_splash_screen.xml" value="0.16" />
+        <entry key="..\:/Android Kotlin/BB/app/src/main/res/layout/activity_view_invoices.xml" value="0.259375" />
         <entry key="..\:/Android Kotlin/BB/app/src/main/res/layout/dialog_show_qr.xml" value="0.2391304347826087" />
-        <entry key="..\:/Android Kotlin/BB/app/src/main/res/layout/listview_items_list.xml" value="0.2391304347826087" />
+        <entry key="..\:/Android Kotlin/BB/app/src/main/res/layout/listview_created_invoices_list.xml" value="0.264" />
+        <entry key="..\:/Android Kotlin/BB/app/src/main/res/layout/listview_items_list.xml" value="0.264" />
+        <entry key="..\:/Android Kotlin/BB/app/src/main/res/layout/listview_settings.xml" value="0.259375" />
+        <entry key="..\:/Android Kotlin/BB/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2755208333333333" />
         <entry key="..\:/Users/mohit/AndroidStudioProjects/BB/app/src/main/res/layout/activity_dashboard.xml" value="0.259375" />
         <entry key="..\:/Users/mohit/AndroidStudioProjects/BB/app/src/main/res/layout/activity_sign_in.xml" value="0.1403985507246377" />
       </map>

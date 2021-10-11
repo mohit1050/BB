@@ -11,7 +11,7 @@ class ItemEntity {
     @PrimaryKey(autoGenerate = true)
     var itemId: Int = 0
 
-    @ColumnInfo(name = "ItemName") // new column / colum name
+    @ColumnInfo(name = "ItemName") // new column / column name
     var itemName: String = ""
 
     @ColumnInfo(name = "Quantity")
@@ -30,7 +30,7 @@ class ItemEntity {
     var taxTotal: String = ""
 
 }
-// note : make itemms save in above table as listed below
+// note : make items save in above table as listed below
 
 // sub_total = amount * quantity
 // tax_total = quantity * tax

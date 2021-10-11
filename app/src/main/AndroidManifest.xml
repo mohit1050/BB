@@ -14,7 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CreateViewPDFActivity"></activity>
+        <activity
+            android:name=".ActivityViewInvoices"
+            android:exported="true" />
+        <activity android:name=".CreateViewPDFActivity" />
         <activity android:name=".ItemsADUActivity" />
         <activity android:name=".ItemsListActivity" />
         <activity android:name=".AccountActivity" />

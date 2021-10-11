@@ -39,7 +39,7 @@ class AccountActivity : AppCompatActivity() {
             val docRef = Firebase.firestore.collection("Users").document(currentUser.uid)
             docRef.get()
                 .addOnSuccessListener { document ->
-                    if (document != null) {
+                    if (document.exists() && document != null) {
 //                    Log.d("101", "DocumentSnapshot data: ${document.data}")
 
                         val uName = (document.getString("yourName")).toString()

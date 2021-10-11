@@ -1,38 +1,28 @@
 package com.mm.bb
 
+import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.DialogInterface
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_dashboard.*
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 import java.util.*
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.Window
-import android.widget.Button
 
-import android.widget.EditText
-import android.widget.ImageView
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
 import kotlinx.android.synthetic.main.dialog_show_qr.*
-
-import android.widget.TextView
 
 import android.graphics.drawable.ColorDrawable
 import com.google.firebase.auth.FirebaseUser
@@ -43,8 +33,14 @@ import kotlinx.android.synthetic.main.activity_show_q_r.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import android.content.SharedPreferences
+import android.widget.*
+import androidx.room.Room
+import com.example.bb_items_roomdb.RoomDB.AppDb
+import com.mm.bb.ItemListView.ItemsListAdapter
+import java.io.File
+import android.widget.ArrayAdapter
+import com.mm.bb.ItemListView.InvoiceListAdapter
+import kotlinx.android.synthetic.main.activity_items_list.*
 
 
 class DashboardActivity : AppCompatActivity() {
@@ -54,6 +50,8 @@ class DashboardActivity : AppCompatActivity() {
     private lateinit var currentUser: FirebaseUser
     private val collectionRef = Firebase.firestore.collection("Users")
     private lateinit var scanneUID: String
+    private var dataList = ArrayList<HashMap<String, String>>()
+    private var filelist = ArrayList<File>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,6 +87,12 @@ class DashboardActivity : AppCompatActivity() {
             val intent = Intent(this, AccountActivity::class.java)
             startActivity(intent)
         }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadIntoList()
     }
 
 
@@ -162,11 +166,16 @@ class DashboardActivity : AppCompatActivity() {
                     Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
                 } else {
                     scanneUID = result.contents
-                    Toast.makeText(this, "Scanned: $scanneUID", Toast.LENGTH_LONG).show()
+//                    Toast.makeText(this, "Scanned: $scanneUID", Toast.LENGTH_LONG).show()
 
                     mAuth = FirebaseAuth.getInstance()
                     currentUser = mAuth.currentUser!!
-                    retrieveData()
+
+                    try {
+                        retrieveData()
+                    } catch (e: Exception) {
+                        Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show()
+                    }
                 }
             } else {
                 super.onActivityResult(requestCode, resultCode, data)
@@ -179,7 +188,7 @@ class DashboardActivity : AppCompatActivity() {
             val docRef = Firebase.firestore.collection("Users").document(scanneUID)
             docRef.get()
                 .addOnSuccessListener { document ->
-                    if (document != null) {
+                    if (document.exists() && document != null) {
 //                    Log.d("101", "DocumentSnapshot data: ${document.data}")
 
                         val yourName = document.getString("yourName")
@@ -201,16 +210,32 @@ class DashboardActivity : AppCompatActivity() {
                             putString("sLandmark", landmark)
                             putString("sCityPin", cityPin)
                             putString("sWebsite", website)
+
                             apply()
                         }
 
 
-                        Toast.makeText(this@DashboardActivity, "Data Retrieved", Toast.LENGTH_SHORT)
+                        Toast.makeText(
+                            this@DashboardActivity,
+                            "Data Retrieved",
+                            Toast.LENGTH_SHORT
+                        )
                             .show()
 //                   tvYourName.setText(document.data)
+                        val intent =
+                            Intent(this@DashboardActivity, ItemsListActivity::class.java)
+                        startActivity(intent)
 
+                    } else {
+                        Toast.makeText(
+                            this@DashboardActivity,
+                            "User not found",
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
                     }
                 }
+
                 .addOnFailureListener { exception ->
                     Toast.makeText(
                         this@DashboardActivity,
@@ -219,6 +244,7 @@ class DashboardActivity : AppCompatActivity() {
                     )
                         .show()
                 }
+
         }
     }
 
@@ -228,6 +254,68 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     fun accountSettings(view: View) {}
+
+
+    private fun loadIntoList() {
+        dataList.clear()
+        val invoicePath =
+            getExternalFilesDir("")!!.absolutePath + "/" //location where the pdf will store
+// get list of pdf from data/files directory
+
+        val dir = File(invoicePath)
+
+
+        var filelist: Array<File>? = null
+        if (filelist != null) {
+            filelist.drop(0)
+        }
+
+        dir.listFiles().also { filelist = it }
+        Arrays.sort(
+            filelist,
+            Comparator.comparingLong { obj: File -> obj.lastModified() }.reversed()
+        )
+
+        val theNamesOfFiles = arrayOfNulls<String>(filelist!!.size)
+        for (i in theNamesOfFiles.indices) {
+            theNamesOfFiles[i] = filelist!![i].name
+
+            val filename = theNamesOfFiles[i]
+            Log.d("909", filename.toString())
+//            val filepath = "$invoicePath$filename"
+
+            val listFileName = theNamesOfFiles[i]!!.replace(".pdf", "")
+
+            val map = HashMap<String, String>()
+            map["file_name"] = listFileName
+//            map["file_name"] = theNamesOfFiles[i].toString()
+            dataList.add(map)
+        }
+
+        runOnUiThread(kotlinx.coroutines.Runnable {
+            findViewById<ListView>(R.id.lvInvoiceList).adapter =
+                InvoiceListAdapter(this, dataList)
+        })  // used this because it cannot be accessed outside of main thread (to fix activity crash on pressing back and error loading listview
+
+        // to open list item on onClick form listview
+        findViewById<ListView>(R.id.lvInvoiceList).setOnItemClickListener { _, _, i, _ ->
+            val intent = Intent(this, ActivityViewInvoices::class.java)
+
+            val clickedFileName = theNamesOfFiles[i]
+            val filepath = "$invoicePath$clickedFileName"
+            intent.putExtra("invoice_path", filepath)
+//            Toast.makeText(this, clickedFileName, Toast.LENGTH_LONG).show()
+            startActivity(intent)
+        }
+
+        if (filelist!!.size > 4) {
+            animation_view_file_list.visibility = View.GONE
+        }
+        if (filelist!!.size > 1) {
+            tv_your_inv_list_here.visibility = View.GONE
+            tv_scan_to_get_started.visibility = View.GONE
+        }
+    }
 
 
 }

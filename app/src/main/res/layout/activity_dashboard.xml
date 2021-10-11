@@ -4,16 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp"
+    android:layout_marginTop="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginLeft="20dp"
     tools:context=".DashboardActivity">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="cursive"
+        android:fontFamily="@font/damion_regular"
         android:text="Billing Bytes"
         android:textSize="24sp"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
@@ -32,23 +35,42 @@
 
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animation_view"
+        android:id="@+id/animation_view_file_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="80sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/files_lottie_anim" />
+
+    <TextView
+        android:id="@+id/tv_your_inv_list_here"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Invoices will list here"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/animation_view_file_list" />
+    <TextView
+        android:id="@+id/tv_scan_to_get_started"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Scan QR to get started"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_your_inv_list_here" />
 
 
     <TextView
         android:id="@+id/tvUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
+        android:textColor="#000000"
         android:text="UserName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -66,16 +88,28 @@
         app:layout_constraintTop_toTopOf="@+id/textView" />
 
 
-    <Button
-        android:id="@+id/btnInvoiceProcess"
-        android:layout_width="wrap_content"
+    <ListView
+        android:id="@+id/lvInvoiceList"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="invoiceProcess"
-        android:text="Invoice Process"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toTopOf="@+id/qrbuttons"
+        android:layout_marginTop="16dp"
+        android:divider="@null"
+        android:dividerHeight="0dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvUserName" />
+
+
+<!--    <Button-->
+<!--        android:id="@+id/btnInvoiceProcess"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:onClick="invoiceProcess"-->
+<!--        android:text="Invoice Process"-->
+<!--        android:textAllCaps="false"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/qrbuttons"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
 
     <LinearLayout
         android:id="@+id/qrbuttons"
@@ -102,7 +136,8 @@ android:layout_marginBottom="2dp"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:padding="8dp"
-                android:src="@drawable/ic_qr_code" />
+                android:src="@drawable/ic_qr_code"
+                app:tint="#000" />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView

@@ -65,7 +65,7 @@ class CreateViewPDFActivity : AppCompatActivity() {
         BaseFont.createFont("assets/fonts/app_font_bold.ttf", "UTF-8", BaseFont.EMBEDDED)
     var appFontBold = Font(basfontBold, FONT_SIZE_DEFAULT)
 
-    private lateinit var invoicePath:String
+    private lateinit var invoicePath: String
 
     val PADDING_EDGE = 40f
     val TEXT_TOP_PADDING = 3f
@@ -92,6 +92,7 @@ class CreateViewPDFActivity : AppCompatActivity() {
     private lateinit var uEmail: String
     private lateinit var uInvoiceNo: String
     private lateinit var invoiceName: String
+    private lateinit var totalAmount: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -250,7 +251,7 @@ class CreateViewPDFActivity : AppCompatActivity() {
 
     // That BLUE Header
     private fun initInvoiceHeader(doc: Document) {
-        val d = resources.getDrawable(R.drawable.gear)
+        val d = resources.getDrawable(R.drawable.logo_billing_bytes)
         val bitDw = d as BitmapDrawable
         val bmp = bitDw.bitmap
         val stream = ByteArrayOutputStream()
@@ -583,7 +584,7 @@ class CreateViewPDFActivity : AppCompatActivity() {
         totalPriceTable.addCell(txtInvoiceTotal)
 
         appFontSemiBold.color = colorPrimary
-        val totalAomountCell = PdfPCell(Phrase("totalAmount", appFontSemiBold))
+        val totalAomountCell = PdfPCell(Phrase(totalAmount, appFontSemiBold))
         totalAomountCell.border = Rectangle.NO_BORDER
         totalAomountCell.horizontalAlignment = Rectangle.ALIGN_RIGHT
         totalPriceTable.addCell(totalAomountCell)
@@ -612,7 +613,7 @@ class CreateViewPDFActivity : AppCompatActivity() {
 //        CoroutineScope(Dispatchers.IO).launch {
         val subTotal = db.abstractItemDao().getSubTotal().toString()
         val taxTotal = db.abstractItemDao().getTaxTotal().toString()
-        val totalAmount = (subTotal.toInt() + taxTotal.toInt()).toString()
+        totalAmount = (subTotal.toInt() + taxTotal.toInt()).toString()
 
 //            withContext(Dispatchers.Main) {
 
@@ -706,9 +707,9 @@ class CreateViewPDFActivity : AppCompatActivity() {
 
     fun shareInvoice(view: android.view.View) {
 
-  val intent = Intent(Intent.ACTION_SEND)
+        val intent = Intent(Intent.ACTION_SEND)
         intent.type = "application/pdf"
-        intent.putExtra(Intent.EXTRA_STREAM,Uri.parse(invoicePath))
+        intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(invoicePath))
         val chooser = Intent.createChooser(intent, "Share Invoice using..")
         startActivity(chooser)
 

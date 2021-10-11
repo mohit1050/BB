@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#80EAEAEA"
+    android:layout_marginTop="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginLeft="20dp"
     tools:context=".ItemsListActivity">
 
     <!--    app:layout_constraintTop_toBottomOf="@+id/row_name"-->
@@ -13,12 +15,23 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Items"
+        android:layout_marginStart="18dp"
+        android:text="Items"
+        android:textColor="#000000"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="18dp"
+        android:onClick="deleteAll"
+        android:src="@drawable/ic_delete_sweep"
+        app:layout_constraintBottom_toBottomOf="@+id/textView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView3"
+        app:tint="#000000" />
 
     <ListView
         android:id="@+id/listView"
@@ -27,9 +40,7 @@
         android:clipToPadding="false"
         android:divider="@null"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
     <!--        android:id="@+id/floatingActionButton2"-->
@@ -76,36 +87,36 @@
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="16dp"
         app:layout_constraintStart_toStartOf="parent">
 
-<!--        <com.google.android.material.card.MaterialCardView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:onClick="deleteAll"-->
-<!--            app:cardBackgroundColor="#fff"-->
-<!--            app:cardElevation="6dp"-->
-<!--            app:cardPreventCornerOverlap="true"-->
-<!--            app:cardUseCompatPadding="true"-->
-<!--            app:shapeAppearance="@style/ShapeAppearance.MyApp.MediumComponent.RoundedLeft">-->
+        <!--        <com.google.android.material.card.MaterialCardView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:onClick="deleteAll"-->
+        <!--            app:cardBackgroundColor="#fff"-->
+        <!--            app:cardElevation="6dp"-->
+        <!--            app:cardPreventCornerOverlap="true"-->
+        <!--            app:cardUseCompatPadding="true"-->
+        <!--            app:shapeAppearance="@style/ShapeAppearance.MyApp.MediumComponent.RoundedLeft">-->
 
-<!--            <ImageView-->
-<!--                android:layout_width="60dp"-->
-<!--                android:layout_height="60dp"-->
-<!--                android:padding="8dp"-->
-<!--                android:src="@drawable/ic_delete_forever" />-->
-<!--        </com.google.android.material.card.MaterialCardView>-->
+        <!--            <ImageView-->
+        <!--                android:layout_width="60dp"-->
+        <!--                android:layout_height="60dp"-->
+        <!--                android:padding="8dp"-->
+        <!--                android:src="@drawable/ic_delete_forever" />-->
+        <!--        </com.google.android.material.card.MaterialCardView>-->
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="addItem"
+            android:tooltipText="Add item"
             app:cardBackgroundColor="#fff"
             app:cardElevation="6dp"
             app:cardPreventCornerOverlap="true"
-            android:tooltipText="Add item"
             app:cardUseCompatPadding="true"
             app:shapeAppearance="@style/ShapeAppearance.MyApp.MediumComponent.RoundedLeft">
 
@@ -120,9 +131,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="generatePDF"
+            android:tooltipText="Create invoice"
             app:cardBackgroundColor="#fff"
             app:cardElevation="6dp"
-            android:tooltipText="Create invoice"
             app:cardPreventCornerOverlap="true"
             app:cardUseCompatPadding="true"
             app:shapeAppearance="@style/ShapeAppearance.MyApp.MediumComponent.RoundedRight">

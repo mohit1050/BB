@@ -21,7 +21,6 @@ class ItemsListActivity : AppCompatActivity() {
     }
 
     private fun loadIntoList() {
-
         dataList.clear()
         val db = Room.databaseBuilder(applicationContext, AppDb::class.java, "BookDB").build()
 
